@@ -38,9 +38,8 @@ Thumbs.db
 
 # Data Files #
 ##############
-.csv
 
 # Autosave Files #
 ##################
-.m~
-.asv
+*.m~
+*.asv
