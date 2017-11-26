@@ -5,14 +5,10 @@
 % Filename: Step1_CountEmails.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:
+% Description:Takes in the large enron csv email file and counts the
+% number of emails and number of unique users in the corpus
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
-
-% Author: Alper Ender
-% Date: November 2017
-% Description: Takes in the large enron csv email file and counts the
-% number of emails and number of unique users in the corpus
 
 % TOTAL EMAILS: 490854
 % TOTAL EMAIL ACCOUNTS: 149
@@ -20,7 +16,7 @@
 clc;
 
 % Opening the file to read
-FID = fopen('/Users/alperender/Downloads/Enron_Emails_Uncleaned.csv','r');
+FID = fopen('Enron_Emails_Uncleaned.csv','r');
 
 % Initalizing variables
 counter = 1;

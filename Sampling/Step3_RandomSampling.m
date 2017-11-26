@@ -5,7 +5,8 @@
 % Filename: Step3_RandomSampling.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:
+% Description: Randomly samples the data from the individual files. Takes
+% only inbox emails that have correct headers
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 
@@ -17,21 +18,28 @@ clc;
 % TOTAL EMAIL ACCOUNTS: 149
 
 % Folder location
-FOLDER_LOCATION = '/Users/alperender/Desktop/ALDA-Project/Individual Files';
-TOTAL_SAMPLE = 400000;
+FOLDER_LOCATION = folder_system.IndividualFiles;
 
-FILE_LOCATION = '/Users/alperender/Desktop/ALDA-Project/';
+% Insert desired maximum number of samples to create here
+TOTAL_SAMPLE = 6000;
 
+% Insert the file directory location here
+FILE_LOCATION = folder_system.Sampling;
+
+% Opens the file to write to
 write_FID = fopen([FILE_LOCATION 'tmp.csv'],'w');
 
 %% Calculations
 
+% Total emails and number of accounts
 total_emails = 490854;
 total_email_accounts = 149;
 
-samples_per_student = floor(TOTAL_SAMPLE / total_email_accounts)
+% Obtains the number of samples to take from each account
+samples_per_account = floor(TOTAL_SAMPLE / total_email_accounts)
 
-all_emails = cell(samples_per_student*total_email_accounts,1);
+% Initializing Variables
+all_emails = cell(samples_per_account * total_email_accounts,1);
 ae_counter = 1;
 
 %% Obtaining samples
@@ -48,7 +56,8 @@ students = dir('*.csv');
 for i = 1:length(students)
     
     % The name of the student
-    name = students(i).name
+    name = students(i).name;
+    fprintf('Importing %s...\n', name);
     
     % Opening the file
     FID = fopen(name);
@@ -63,9 +72,16 @@ for i = 1:length(students)
         line = fgetl(FID);
         tok = split(line,',');
         
-        % Looking for only inbox items with subject without .com inside of
-        % the subject and sion: 1.0 (a bug)
-        if contains(lower(line), '_inbox') & ~contains(tok{5},'.com') & ~contains(tok{5}, 'sion: 1.0') & ~contains(tok{4}, 'ject:')
+        % Looking at only inbox emails
+        rule1 = contains(lower(line), '_inbox');
+        
+        % Looking at emails with correct headers
+        rule2 = ~contains(tok{5},'.com');
+        rule3 = ~contains(tok{5}, 'sion: 1.0');
+        rule4 = ~contains(tok{4}, 'ject:');
+        
+        % If the rules are satisfied, then append to the email cell
+        if rule1 & rule2 & rule3 & rule4 
             student_emails{count, 1} = line;
             count = count + 1;
         end
@@ -79,10 +95,10 @@ for i = 1:length(students)
     r_values = randperm(r);
     
     % Take the lesser between r and and samples per student
-    if samples_per_student > r
+    if samples_per_account > r
         ind = r;
     else
-        ind = samples_per_student;
+        ind = samples_per_account;
     end
     
     % Take the first n numbers
@@ -97,6 +113,7 @@ for i = 1:length(students)
             continue
         end
         
+        % Do not put a line break at the end of the file
         if i == length(students) & j == length(r_emails)
             fprintf(write_FID, '%s', r_emails{j});
         else
@@ -108,19 +125,24 @@ for i = 1:length(students)
     
 end
 
-fclose('all')
+fclose('all');
 
 %% Rename the file appropriately
 
+% Read the file
 FID = fopen([FILE_LOCATION 'tmp.csv'], 'r');
 
 counter = 0;
 
+% Count the number of lines
 while ~feof(FID)
     fgetl(FID);
     counter = counter + 1;
 end
 
+% Close the file
 fclose(FID);
 
+% Rename the file with the correct number of samples
 movefile([FILE_LOCATION 'tmp.csv'], [FILE_LOCATION 'Samples_' int2str(counter) '.csv'])
+

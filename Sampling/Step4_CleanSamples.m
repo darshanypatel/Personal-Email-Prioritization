@@ -5,55 +5,79 @@
 % Filename: Step4_CleanSamples.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:
+% Description: Cleans up the body of the samples and renames the file
+% appropriately to the correct number of samples
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 
-clc; clear; fclose('all')
+%% Setup
 
-% Defining files to parse
-files = dir('*.csv');
+clc; fclose('all');
 
-% Iterating through files
-for i = 1:length(files)
+% Obtaining the filename and file location
+FILE_LOCATION = folder_system.Sampling;
+FILENAME = 'Samples_5469.csv';
+
+%% Cleaning up the message contents
+
+fprintf('Cleaning Samples...\n')
+
+% Opening the filename to read from
+FID = fopen([FILE_LOCATION FILENAME], 'r');
+
+% Opening file to write to
+FID_write = fopen([FILE_LOCATION 'CleanBody_' FILENAME], 'w');
+
+% Iterate through the CSV file
+while ~feof(FID)
     
-    % Setting the filename
-    filename = files(i).name
+    % Get the line and tokenize based on delimiter
+    line = fgetl(FID);
+    tok = textscan(line,'%s','Delimiter',',');
     
-    % Opening the filename to read from
-    FID = fopen(filename, 'r');
+    % Parse the body from the tokens
+    body = tok{1}{end};
     
-    % Opening file to write to
-    FID_write = fopen(['CleanBody_' filename], 'w');
+    % Regexp the body for the .nsf or .pst location
+    [token, start, e] = regexp(lower(body), '(\.(?:nsf|pst))','tokens','once');
     
-    % Iterate through the CSV file
-    while ~feof(FID)
-        
-        % Get the line and tokenize based on delimiter
-        line = fgetl(FID);
-        tok = textscan(line,'%s','Delimiter',',');
-        
-        % Parse the body from the tokens
-        body = tok{1}{end};
-        
-        % Regexp the body for the .nsf or .pst location
-        [token, start, e] = regexp(lower(body), '(\.(?:nsf|pst))','tokens','once');
-        
-        % If the body is empty, ignore it
-        if isempty(body(e-40:e+1))
-            continue
-        end
-        
-        % Storing the tokens
-        a = tok{1};
-        
-        % Strip the first part of the body
-        fprintf(FID_write, '%s,%s,%s,%s,%s,%s\n', a{2}, a{3}, a{4}, a{5}, a{6}, strip(body(e+1:end)));
-        
+    % If the body is empty, ignore it
+    if isempty(body(e-40:e+1))
+        continue
     end
     
-    % Close files
-    fclose(FID);
-    fclose(FID_write);
+    % Storing the tokens
+    a = tok{1};
+    
+    % Strip the first part of the body
+    fprintf(FID_write, '%s,%s,%s,%s,%s,%s\n', a{2}, a{3}, a{4}, a{5}, a{6}, strip(body(e+1:end)));
     
 end
+
+% Close files
+fclose(FID);
+fclose(FID_write);
+
+%%
+
+% Read the file
+FID = fopen([FILE_LOCATION 'CleanBody_' FILENAME], 'r');
+
+counter = 0;
+
+% Count the number of lines
+while ~feof(FID)
+    fgetl(FID);
+    counter = counter + 1;
+end
+
+% Close the file
+fclose(FID);
+
+% Rename the file with the correct number of samples
+movefile([FILE_LOCATION 'CleanBody_' FILENAME], [FILE_LOCATION 'CleanBody_Samples_' int2str(counter) '.csv'])
+
+
+%% Cleanup
+
+fprintf('Samples Cleaned.\n')

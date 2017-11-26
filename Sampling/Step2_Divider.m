@@ -5,19 +5,23 @@
 % Filename: Step2_Divider.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:
+% Description:Takes in the large enron csv email file and split it based
+% on the name of the folder the email is found
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 
-% Author: Alper Ender
-% Date: November 2017
-% Description: Takes in the large enron csv email file and split it based
-% on the name of the folder the email is found
-
 clc;
 
-% Open the entire email file
-FID = fopen('/Users/alperender/Desktop/ALDA-Project/Enron_Emails_Uncleaned.csv','r');
+% Open the entire email csv file
+FID = fopen('Enron_Emails_Uncleaned.csv','r');
+
+% Creating the directory
+mkdir('Individual Files')
+cd('Individual Files')
+
+% Adding directory to the path
+loc = pwd;
+addpath(loc);
 
 % Set up initial variables
 current_name = '';
@@ -64,12 +68,16 @@ while ~feof(FID)
         
         % Display the name
         disp(name)
+        
     end
     
     % Print each line to the correct file
-    fprintf(1, '%s\n',line);
+    % fprintf(1, '%s\n',line);
     fprintf(current_file, '%s\n',line);
     
 end
 
-fclose('all')
+% Closing all files
+fclose('all');
+
+cd('../')

@@ -5,7 +5,7 @@
 % Filename: Unsupervised_Models_Test.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:
+% Description: Creates all the unsupervised models and graphs the models
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 
@@ -20,21 +20,42 @@ Important Links (SSE):
 
 %}
 
-%% Clearing Everything
+%% Setup Workspace
 
-clc; clear; close all;
+clc; close all;
 
 %% Setup
 
-% Location of the CSV File or Folder System
-FOLDER_LOCATION = '/Users/alperender/Dropbox/CSC 522/Project';  % (Mac)
-% FOLDER_LOCATION = 'C:\Users\Alper Ender\Desktop\inbox';       % (Windows)
+% Change to the correct folder
+cd(folder_system.UnsupervisedTest)
 
-% Use the Folder System (true) or Read in a CSV File (false)
-USE_FOLDER_SYSTEM = false;          
+% Location of the CSV File or Folder System
+FOLDER_LOCATION = folder_system.Sampling;
 
 % The Filename to read in
-FILENAME = 'test.csv';   
+FILENAME = 'CleanBody_Samples_5297.csv';
+
+%% Read in English Dictionary
+
+% words.txt taken from:
+% https://raw.githubusercontent.com/dwyl/english-words/master/words.txt
+
+% Open the file to read from
+FID = fopen('words.txt','r');
+
+% Setup variables
+words = {};
+i = 1;
+
+while ~feof(FID)
+    
+    % Read in words from the file
+    words{i,1} = fgetl(FID);
+    i = i+1;
+    
+end
+
+fclose('all');
 
 %% Read in the values
 
@@ -42,68 +63,82 @@ FILENAME = 'test.csv';
 % https://www.mathworks.com/help/textanalytics/
 %         examples/prepare-text-data-for-analysis.html
 
-cd(FOLDER_LOCATION)
+fprintf('Beginning Unsupervised Models Test...\n')
+fprintf('Importing words...\n')
 
-if USE_FOLDER_SYSTEM
+FID = fopen([FOLDER_LOCATION FILENAME],'r');
+
+% Initializing docs and count
+docs = tokenizedDocument;
+count = 1;
+
+num = regexp(FILENAME,'([0-9]*)','tokens');
+value = str2double(num{1}{1});
+date  = cell(1,1);
+from  = cell(1,1);
+to    = cell(1,1);
+subj  = cell(1,1);
+loc   = cell(1,1);
+
+
+% Iterating through number of files
+while ~feof(FID)
     
-    % Obtain the number of files
-    files = dir;
+    % Reading the line
+    line = fgetl(FID);
     
-    % Initializing docs and count
-    docs = tokenizedDocument;
-    count = 1;
+    % Split based on commas
+    vals = split(line, ',');
     
-    % Iterating through number of files
-    parfor i = 1:length(files)
-        
-        % Obtaining the name of the file
-        name = files(i).name;
-        
-        % If the name is not illegal
-        if sum(strcmpi(name,{'.','..','.DS_STORE'}))==0
-            
-            % Preprocess the values
-            docs(count,1) = PreProcess(fileread(name));
-            
-            % Increment the counter
-            count = count+1;
-            disp(name)
-        end
-        
-    end
+    % Obtain the values from the sampled data
+    date{count,1} = vals{1};
+    from{count,1} = vals{2};
+    to{count,1}   = vals{3};
+    subj{count,1} = vals{4};
+    loc{count,1}  = vals{5};
     
-else
+    % Preprocess the values
+    docs(count,1) = PreProcess([vals{4} vals{6}]);
     
-    FID = fopen(FILENAME,'r');
+    % Increment the counter
     
-    % Initializing docs and count
-    docs = tokenizedDocument;
-    count = 1;
-    
-    % Iterating through number of files
-    while ~feof(FID)
-        
-        % Reading the line
-        line = fgetl(FID);
-        
-        % Split based on commas
-        vals = split(line, ',');
-        
-        % Preprocess the values
-        docs(count,1) = PreProcess(vals{5});
-        
-        % Increment the counter
+    if mod(count,1000)==0
         disp(count)
-        count = count+1;
-                
     end
-    
-    % Close the file
-    fclose(FID);
+    count = count+1;
     
 end
 
+% Close the file
+fclose(FID);
+
+
+%% Batch PreProcessing
+
+fprintf('Cleaning Words...\n')
+
+% Preprocessing all the documents in a batch
+docs = BatchPreProcess(docs);
+
+% Go through the vocabulary and delete all non-dictionary words
+document_vocabulary = docs.Vocabulary;
+
+% Go through each word in the vocabulary and checking to see if it is in
+% the list and delete the word from the document if it is not
+del_words = {};
+count = 1;
+for i = 1:length(document_vocabulary)
+    if sum( strcmpi(document_vocabulary{i} , words)) == 0
+        docs = docs.removeWords(document_vocabulary{i});
+    end
+    if mod(i,1000) == 0
+        fprintf('%d out of %d\n',i,length(document_vocabulary))
+    end
+end
+
 %% Bag of Words Model
+
+fprintf('Creating Bag of Words Model...\n')
 
 % Creating the bag of words of model
 bag = bagOfWords(docs);
@@ -118,23 +153,27 @@ numberOfDocuments = bag.NumDocuments;
 
 %% TFIDF Model
 
+fprintf('Creating TFIDF Model...\n')
+
 % Creating the tfidf model
 M = tfidf(bag);
 
 % Looking at the model
 m = full(M);
-topkwords(bag,10)
+topkwords(bag,10);
 
 % Getting the size of M
-size(M)
+size(M);
 full_M = full(M);
 
 
 %% Bag of Words, LDA, K-Means
 
+fprintf('Creating BOW - LDA - KMeans Model...\n')
+
 % Creating an LDA model from the bag of words
-numTopics = 5
-mdl = fitlda(bag, numTopics)
+numTopics = 5;
+mdl = fitlda(bag, numTopics);
 
 % Defining distance algorithms
 % algorithms = {'sqeuclidean', 'cityblock'};
@@ -171,7 +210,6 @@ end
 [r, ~] = size(bag.Counts);
 SSE = zeros(1,r);
 
-%%
 for i = 1:r/10
     
     % Grouping the documents based on k-means 
@@ -204,8 +242,10 @@ ylabel('SSE')
 
 %% Bag of Words, LSA, K-Means
 
-numTopics = 3
-mdl = fitlsa(bag, numTopics)
+fprintf('Creating BOW - LSA - KMeans Model...\n')
+
+numTopics = 5;
+mdl = fitlsa(bag, numTopics);
 
 % Defining distance algorithms
 algorithms = {'sqeuclidean', 'cityblock', 'correlation', 'cosine'};
@@ -270,9 +310,11 @@ ylabel('SSE')
 
 %% TFIDF, LDA, K-Means
 
+fprintf('Creating TFIDF - LDA - KMeans Model...\n')
+
 % Creating an LDA model from the bag of words
-numTopics = 10
-mdl = fitlda(round(full_M), numTopics)
+numTopics = 5;
+mdl = fitlda(round(full_M), numTopics);
 
 % Defining distance algorithms
 algorithms = {'sqeuclidean', 'cityblock', 'correlation', 'cosine'};
@@ -303,7 +345,6 @@ for i = 1:length(algorithms)
 
 end
 
-%%
 % Validation using SSE
 [r, c] = size(full_M);
 SSE = zeros(1,r);
@@ -338,8 +379,10 @@ ylabel('SSE')
 
 %% TFIDF, LDA, K-Medoids
 
-numTopics = 3;
-mdl = fitlda(round(full_M), numTopics)
+fprintf('Creating TFIDF - LDA - KMedoids Model...\n')
+
+numTopics = 5;
+mdl = fitlda(round(full_M), numTopics);
 
 % Defining the distance algorithms to use
 algorithms = {'sqeuclidean', 'cityblock', 'correlation', 'cosine'};
@@ -406,8 +449,10 @@ ylabel('SSE')
 
 %% TFIDF, LSA, K-Means
 
-numTopics = 3
-mdl = fitlsa(full_M, numTopics)
+fprintf('Creating TFIDF - LSA - KMeans Model...\n')
+
+numTopics = 5;
+mdl = fitlsa(full_M, numTopics);
 
 % Defining the distance algorithms to use
 algorithms = {'sqeuclidean', 'cityblock', 'correlation', 'cosine'};
@@ -475,8 +520,10 @@ ylabel('SSE')
 
 %% TFIDF, LSA, K-Medoids
 
-numTopics = 3;
-mdl = fitlsa(full_M, numTopics)
+fprintf('Creating TFIDF - LSA - KMedoids Model...\n')
+
+numTopics = 5;
+mdl = fitlsa(full_M, numTopics);
 
 % Defining the distance algorithms to use
 algorithms = {'sqeuclidean', 'cityblock', 'correlation', 'cosine'};
@@ -540,13 +587,16 @@ title('SSE vs. Number of Partitions')
 xlabel('Number of Partitions')
 ylabel('SSE')
 
+
 %% Bag of Words, LDA, Hiearchal Linkage/Cluster
+
+fprintf('Creating BOW - LDA - Hierarchal Model...\n')
 
 % Creating an LDA model from the bag of words
 full_bag = full(bag.Counts);
 
-numTopics = 3
-mdl = fitlda(full_bag, numTopics)
+numTopics = 5;
+mdl = fitlda(full_bag, numTopics);
 
 figure()
 set(gcf,'Name', 'Bag Of Words, LDA, Hiearchal Linkage/Cluster')
@@ -584,11 +634,13 @@ title(['Dendrogram of ' upper(methods{i}) ' Cluster'])
 
 %% Bag of Words, LSA, Hierarchal Linkage/Cluster
 
+fprintf('Creating BOW - LSA - Hierarchal Model...\n')
+
 % Creating an LDA model from the bag of words
 full_bag = full(bag.Counts);
 
-numTopics = 3
-mdl = fitlsa(full_bag, numTopics)
+numTopics = 5;
+mdl = fitlsa(full_bag, numTopics);
 
 figure()
 set(gcf,'Name', 'Bag Of Words, LSA, Hiearchal Linkage/Cluster')
@@ -626,9 +678,11 @@ title(['Dendrogram of ' upper(methods{i}) ' Cluster'])
 
 %% TFIDF, LDA, Hierarchal Linkage/Cluster
 
+fprintf('Creating TFIDF - LDA - Hierarchal Model...\n')
+
 % Creating an LDA model from the bag of words
-numTopics = 3
-mdl = fitlda(round(full_M), numTopics)
+numTopics = 5;
+mdl = fitlda(round(full_M), numTopics);
 
 figure()
 set(gcf,'Name', 'TFIDF, LDA, Hiearchal Linkage/Cluster')
@@ -666,8 +720,10 @@ title(['Dendrogram of ' upper(methods{i}) ' Cluster'])
 
 %% TFIDF, LSA, Hierarchal Linkage/Cluster
 
-numTopics = 3
-mdl = fitlsa(full_M, numTopics)
+fprintf('Creating BOW - LSA - Hierarchal Model...\n')
+
+numTopics = 5;
+mdl = fitlsa(full_M, numTopics);
 
 figure()
 set(gcf,'Name', 'TFIDF, LSA, Hiearchal Linkage/Cluster')
@@ -704,6 +760,8 @@ title(['Dendrogram of ' upper(methods{i}) ' Cluster'])
 
 
 %% TFIDF, DBSCAN
+
+fprintf('Creating TFIDF - DBSCAN Model...\n')
 
 % DBSCAN referenced and used from:
 % https://www.mathworks.com/matlabcentral/
@@ -759,4 +817,8 @@ for i=0:k
 end
 
 title(sprintf('DBSCAN Clustering (\\epsilon = %d, MinPts = %d)', epsilon, MinPts))
-    
+
+%% Cleanup
+
+fprintf('Unsupervised Models Test Completed.\n')
+

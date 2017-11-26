@@ -5,7 +5,7 @@
 % Filename: Unsupervised_Models_Final.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:
+% Description: Creates the final Unsupervised Model
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 
@@ -20,18 +20,20 @@ Important Links (SSE):
 
 %}
 
-%% Clearing Everything
+%% Setup Workspace
 
-clc; clear; close all;
+clc; close all;
 
 %% Setup
 
+% Change to the correct folder
+cd(folder_system.UnsupervisedFinal)
+
 % Location of the CSV File or Folder System
-FOLDER_LOCATION = '/Users/alperender/Desktop/ALDA-Project/Sampling/';  % (Mac)
-% FOLDER_LOCATION = 'C:\Users\Alper Ender\Desktop\inbox';       % (Windows)
+FOLDER_LOCATION = folder_system.Sampling;
 
 % The Filename to read in
-FILENAME = 'CleanBody_Samples_881.csv';
+FILENAME = 'CleanBody_Samples_5469.csv';
 
 %% Read in English Dictionary
 
@@ -60,6 +62,9 @@ fclose('all');
 % PreProcess referenced and used from:
 % https://www.mathworks.com/help/textanalytics/
 %         examples/prepare-text-data-for-analysis.html
+
+fprintf('Beginning Unsupervised Models Final...\n')
+fprintf('Importing words...\n')
 
 FID = fopen([FOLDER_LOCATION FILENAME],'r');
 
@@ -116,6 +121,8 @@ docs = BatchPreProcess(docs);
 % Go through the vocabulary and delete all non-dictionary words
 document_vocabulary = docs.Vocabulary;
 
+fprintf('Cleaning words...\n')
+
 % Go through each word in the vocabulary and checking to see if it is in
 % the list and delete the word from the document if it is not
 del_words = {};
@@ -129,9 +136,10 @@ for i = 1:length(document_vocabulary)
     end
 end
 
-% docs = docs.normalizeWords();
 
 %% Bag of Words Model
+
+fprintf('Creaking Bag of Words Model...\n')
 
 % Creating the bag of words of model
 bag = bagOfWords(docs);
@@ -151,7 +159,7 @@ M = tfidf(bag);
 
 % Looking at the model
 m = full(M);
-topkwords(bag,10)
+% topkwords(bag,10)
 
 % Getting the size of M
 size(M)
@@ -160,13 +168,15 @@ full_M = full(M);
 
 %% TFIDF, LDA, K-Medoids
 
+fprintf('Creating BOW - LDA - KMedoids Model...\n')
+
 numTopics = 20;
-mdl = fitlda(round(full_M), numTopics)
-% mdl = fitlda(bag, numTopics)
+% mdl = fitlda(round(full_M), numTopics) % TFIDF Model
+mdl = fitlda(bag, numTopics);
 
 % Setting up figure
 figure()
-set(gcf,'Name', 'TFIDF, LDA, K-Medoids')
+set(gcf,'Name', 'BOW, LDA, K-Medoids')
 
 % Grouping the documents based on k-medoids
 [groups,C] = kmedoids(mdl.DocumentTopicProbabilities, numTopics,...
@@ -180,10 +190,12 @@ colors = linspecer();
 scatter(score(:,1), score(:,2), [], colors(groups)');
 
 % Title
-title(['K-Means sqeuclidean'])
+title(['BOW, LDA, K-Medoids'])
 grid on
 
 %% Export Values
+
+fprintf('Exporting documents...\n')
 
 % Opening the file to write the cleaned data to
 um_fid = fopen('Unsupervised Output.csv','w');
@@ -207,4 +219,8 @@ end
 
 % Closing file
 fclose(um_fid);
+
+%% Cleanup
+
+fprintf('Unsupervised Model Final Completed.\n')
 
