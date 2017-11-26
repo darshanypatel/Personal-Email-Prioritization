@@ -11,7 +11,11 @@
 
 %% Setup
 
+% Clear work station
 clc; clear; fclose('all')
+
+% Turn off warnings
+warning('off')
 
 % Change directory to current file folder
 cd(fileparts(which(mfilename)))
@@ -45,7 +49,11 @@ paths = struct2cell(folder_system);
 all_paths = [];
 
 for i = 1:length(paths)
-    all_paths = [all_paths ':' paths{i}];
+    if isunix
+        all_paths = [all_paths ':' paths{i}];
+    else
+        all_paths = [all_paths ';' paths{i}];
+    end
 end
 all_paths(1) = [];
 addpath(all_paths)

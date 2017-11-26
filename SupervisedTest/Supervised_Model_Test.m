@@ -9,132 +9,87 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 
-% Author: Alper Ender
+clc; fclose('all');
 
-clc; clear; fclose('all')
+cd(folder_system.SupervisedTest)
 
-%% Reading in the data
+% Percent of the values that are in the training data
+PERCENT_TRAIN = 80;
 
-% Opening the training file to read
-train_fid = fopen('C:\Users\Alper Ender\Downloads\Version 2\Supervised Test\Train.csv','r');
+% Opening the file to read
+FID = fopen('Unsupervised Output.csv','r');
 
-% Initalizing training variables
+
+%% Importing values
+
+fprintf('Beginning Supervised Model Test...\n')
+fprintf('Importing Documents...\n')
+
+% Initalizing variables
 counter = 1;
-train_x = {};
-train_y = {};
-train_data = {};
+all_emails = {};
 
-% Running through the trining file
-while ~feof(train_fid)
+% Running through the file
+while ~feof(FID)
     
     % Read the line
-    line = fgetl(train_fid);
+    line = fgetl(FID);
     
     % Tokenize the line from the delimiter
     tokens = split(line,',');
     
-    % Store the emails into the training set
-    train_data(counter,:) = tokens(1:end-2);
-    train_x(counter,:) = tokens(end-1)';
-    train_y(counter,1) = tokens(end);
+    % Store the eamil
+    all_emails(counter,:) = tokens';
     
     % Increment counter
     counter = counter + 1;
     
 end
 
-fclose(train_fid);
+%% Creating the Bag of Words from the dictionary
 
-
-% Opening the test file to read
-test_fid = fopen('C:\Users\Alper Ender\Downloads\Version 2\Supervised Test\Testing.csv','r');
-
-% Initalizing test variables
-counter = 1;
-test_x = {};
-test_y = {};
-test_data = {};
-
-% Running through the test file
-while ~feof(test_fid)
-    
-    % Read the line
-    line = fgetl(test_fid);
-    
-    % Tokenize the line from the delimiter
-    tokens = split(line,',');
-    
-    % Store the emails into the testing set
-    test_data(counter,:) = tokens(1:end-2);
-    test_x(counter,:) = tokens(end-1)';
-    test_y(counter,1) = tokens(end);
-    
-    % Increment counter
-    counter = counter + 1;
-    
-end
-
-fclose(test_fid);
-
-
-%% Supervised Model
-
-% Creating the tokenized documents
-train_docs = tokenizedDocument;
-test_docs = tokenizedDocument;
+fprintf('Creating the Dictionary Bag of Words...\n')
 
 % Reading in the dictionary words and tokenizing the words
-dictionary = fileread('C:\Users\Alper Ender\Downloads\Version 2\Unsupervised Final\words.txt');
+dictionary = fileread('words.txt');
 dict = tokenizedDocument(dictionary);
 
 % Creating a bag of words based off the dictionary values
-t_bag = bagOfWords(dict)
+t_bag = bagOfWords(dict);
 
-% - TRAINING -
-% Going through the words and creating a tokenized document based on the
-% training cleaned words
-for i = 1:length(train_x)
-    train_docs(i) = tokenizedDocument(train_x{i});
+
+%% Creating the documents Bag of Words
+
+fprintf('Creating the Documents Bag of Words...\n')
+
+% Initializing variables
+docs = tokenizedDocument;
+[r, c] = size(all_emails);
+
+% Go through each email and put into the document list
+for i = 1:r
+    docs(i,1) = tokenizedDocument(all_emails{i,end-1});
 end
 
-% Encode the training words based upon the dictionary words
-s_train_x = encode(t_bag, train_docs);
+% Encode the documents based off the dictionary bag of words
+docs_s = encode(t_bag, docs);
+all_docs = full(docs_s);
 
+% Obtaining the split val
+split_val = floor(r * 0.8);
 
-%%
-%s_train_x = uint16(s_train_x)
-% [r, c] = size(s_train_x);
-% b = floor(r/2);
-% 
-% s1 = full(s_train_x(1:b,:));
-% train_x = s1;
+% Obtaining the training values
+train_x = all_docs(1:split_val, :);
+train_y = all_emails(1:split_val, end);
 
-% Obtain the entire training set
-train_x = full(s_train_x);
-
-%%
-
-% - TESTING -
-% Going through the words and creating a tokenized document based on the
-% tessting cleaned words
-for i = 1:length(test_x)
-    test_docs(i) = tokenizedDocument(test_x{i});
-end
-
-% Encode the testing words based upon the dictionary words
-s_test_x = encode(t_bag, test_docs);
-
-% [r, c] = size(s_test_x);
-% b = floor(r/2);
-% 
-% s2 = full(s_test_x(1:b,:));
-% test_x = s2;
-
-% Obtaining the entire testing set
-test_x = full(s_test_x);
+% Obtaining the testing values
+test_x = all_docs(split_val + 1 : end, :);
+test_y = all_emails(split_val + 1 : end, end);
 
 
 %% Naive Bayes Supervised Model
+
+fprintf('Creating the Naive Bayes Model...\n')
 
 % Initializing variables
 count = 1;
@@ -142,66 +97,76 @@ acc = [];
 
 testing_pca_vals = 5:5:60;
 
-for pca_count = testing_pca_vals
+try
     
-    % Calculating the pca for the full trained x matrix
-    [coeff,score,latent,tsquared,explained,mu] = pca(train_x, 'NumComponents', pca_count);
-    % whos coeff score latent tsquared explained mu
+    for pca_count = testing_pca_vals
+        
+        % Calculating the pca for the full trained x matrix
+        [coeff,score,latent,tsquared,explained,mu] = pca(train_x, 'NumComponents', pca_count);
+        % whos coeff score latent tsquared explained mu
+        
+        % Finding the mean and the total number of important attributes to keep
+        mean_train_x = mean(train_x);
+        total_important_values = sum(explained > 1);
+        
+        % Creating the naive bayes model model
+        Mdl = fitcnb(score,train_y);
+        
+        % Modfiying the testing data using the PCA values
+        modified_test_x = (test_x - mean_train_x) * coeff;
+        
+        % Predicting the values using the testing dataset
+        predicted_vals = Mdl.predict(modified_test_x);
+        
+        % Calculating the number correct and incorrect classifications
+        comparison = str2double(test_y) == str2double(predicted_vals);
+        num_incorrect = sum(comparison == 0);
+        num_correct = sum(comparison == 1);
+        
+        % Calculating the accuracy for this specific number of pca components
+        accuracy = (num_correct / length(comparison)) * 100;
+        
+        % Printing the values
+        fprintf('Naive Bayes. Num Components: %d - %.6f%% Accuracy\n', pca_count, accuracy);
+        
+        % Storing the accuracy
+        acc(count,1) = accuracy;
+        count = count + 1;
+        
+    end
     
-    % Finding the mean and the total number of important attributes to keep
-    mean_train_x = mean(train_x);
-    total_important_values = sum(explained > 1);
+    %% Plotting the results
     
-    % Creating the naive bayes model model
-    Mdl = fitcnb(score,train_y);
+    % Creating the figure
+    figure()
     
-    % Modfiying the testing data using the PCA values
-    modified_test_x = (test_x - mean_train_x) * coeff;
+    % Creating the scatter plot based upon the results
+    scatter(testing_pca_vals, acc, '*k')
     
-    % Predicting the values using the testing dataset
-    predicted_vals = Mdl.predict(modified_test_x);
+    % Printing the text percentage values
+    for i = 1:length(acc)
+        text(testing_pca_vals(i), acc(i)+3, sprintf('%.f%%', acc(i)) )
+    end
     
-    % Calculating the number correct and incorrect classifications
-    comparison = str2double(test_y) == str2double(predicted_vals);
-    num_incorrect = sum(comparison == 0);
-    num_correct = sum(comparison == 1);
+    % Fixing the limits and the grid
+    axis([0 65 0 100])
+    grid on
     
-    % Calculating the accuracy for this specific number of pca components
-    accuracy = (num_correct / length(comparison)) * 100;
+    % Labeling Axis
+    title('Naive Bayes Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories')
+    xlabel('Number of PCA Components')
+    ylabel('Accuracy (Percentage)')
     
-    % Printing the values
-    fprintf('Num Components: %d - %.2f%% Accuracy\n', pca_count, accuracy);
+catch
     
-    % Storing the accuracy
-    acc(count,1) = accuracy;
-    count = count + 1;
+    fprintf('Error on Naive Bayes Classifer...\n')
     
 end
-
-%% Plotting the results
-
-% Creating the figure
-figure()
-
-% Creating the scatter plot based upon the results
-scatter(testing_pca_vals, acc, '*k')
-
-% Printing the text percentage values
-for i = 1:length(acc)
-    text(testing_pca_vals(i), acc(i)+3, sprintf('%.f%%', acc(i)) )
-end
-
-% Fixing the limits and the grid
-axis([0 65 0 100])
-grid on
-
-% Labeling Axis
-title('Naive Bayes Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories - 50k')
-xlabel('Number of PCA Components')
-ylabel('Accuracy (Percentage)')
 
 
 %% Binary Tree Classifier
+
+fprintf('Creating the Binary Classifier Model...\n')
 
 % Initializing variables
 count = 1;
@@ -237,7 +202,7 @@ for pca_count = testing_pca_vals
     accuracy = (num_correct / length(comparison)) * 100;
     
     % Printing the values
-    fprintf('Num Components: %d - %.2f%% Accuracy\n', pca_count, accuracy);
+    fprintf('Binary Classifier. Num Components: %d - %.6f%% Accuracy\n', pca_count, accuracy);
     
     % Storing the accuracy
     acc(count,1) = accuracy;
@@ -263,11 +228,13 @@ axis([0 65 0 100])
 grid on
 
 % Labeling the axis
-title('Binary Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories - 50k')
+title('Binary Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories')
 xlabel('Number of PCA Components')
 ylabel('Accuracy (Percentage)')
 
 %% KNN Classifier
+
+fprintf('Creating the KNN Model...\n')
 
 % Initializing variables
 count = 1;
@@ -303,7 +270,7 @@ for pca_count = testing_pca_vals
     accuracy = (num_correct / length(comparison)) * 100;
     
     % Printing the values
-    fprintf('Num Components: %d - %.2f%% Accuracy\n', pca_count, accuracy);
+    fprintf('KNN. Num Components: %d - %.6f%% Accuracy\n', pca_count, accuracy);
     
     % Storing the accuracy
     acc(count,1) = accuracy;
@@ -329,12 +296,14 @@ axis([0 65 0 100])
 grid on
 
 % Labeling the axis
-title('KNN Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories - 50k')
+title('KNN Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories')
 xlabel('Number of PCA Components')
 ylabel('Accuracy (Percentage)')
 
 
 %% NO PCA
+
+fprintf('Creating the KNN No PCA Model...\n')
 
 % Creating a KNN classifier model
 Mdl = fitcknn(train_x, train_y);
@@ -351,7 +320,7 @@ num_correct = sum(comparison == 1);
 accuracy = (num_correct / length(comparison)) * 100;
 
 % Printing the values
-fprintf('NO PCA : %.2f%% Accuracy\n', accuracy);
+fprintf('KNN. NO PCA - %.2f%% Accuracy\n', accuracy);
 
 
 %% Plotting the results
@@ -367,7 +336,7 @@ scatter(c,accuracy, '*k')
 
 % Printing the text percentage values
 for i = 1:length(c)
-    text(c(i), accuracy+3, sprintf('%.2f%%', accuracy) )
+    text(c(i), accuracy+3, sprintf('%.6f%%', accuracy) )
 end
 
 % Fixing the limits and the grid
@@ -375,13 +344,230 @@ ylim([0 100])
 grid on
 
 % Labeling the axis
-title('KNN Classifier - Accuracy vs. NO PCA - 20 Categories - 50k')
+title('KNN Classifier - Accuracy vs. NO PCA - 20 Categories')
 xlabel('Number of Components')
 ylabel('Accuracy (Percentage)')
 
 
 
+%% Optimized Classifiers
+
+%% Naive Bayes Optimized Supervised Model
+
+fprintf('Creating the Optimized Naive Bayes Model...\n')
+
+% Initializing variables
+count = 1;
+acc = [];
+
+testing_pca_vals = 5:5:60;
+
+try
+    
+    for pca_count = testing_pca_vals
+        
+        % Calculating the pca for the full trained x matrix
+        [coeff,score,latent,tsquared,explained,mu] = pca(train_x, 'NumComponents', pca_count);
+        % whos coeff score latent tsquared explained mu
+        
+        % Finding the mean and the total number of important attributes to keep
+        mean_train_x = mean(train_x);
+        total_important_values = sum(explained > 1);
+        
+        % Creating the naive bayes model model
+        Mdl = fitcnb(score,train_y, 'OptimizeHyperParameters', 'auto');
+        
+        % Modfiying the testing data using the PCA values
+        modified_test_x = (test_x - mean_train_x) * coeff;
+        
+        % Predicting the values using the testing dataset
+        predicted_vals = Mdl.predict(modified_test_x);
+        
+        % Calculating the number correct and incorrect classifications
+        comparison = str2double(test_y) == str2double(predicted_vals);
+        num_incorrect = sum(comparison == 0);
+        num_correct = sum(comparison == 1);
+        
+        % Calculating the accuracy for this specific number of pca components
+        accuracy = (num_correct / length(comparison)) * 100;
+        
+        % Printing the values
+        fprintf('Optimizied Naive Bayes. Num Components: %d - %.6f%% Accuracy\n', pca_count, accuracy);
+        
+        % Storing the accuracy
+        acc(count,1) = accuracy;
+        count = count + 1;
+        
+    end
+    
+    %% Plotting the results
+    
+    % Creating the figure
+    figure()
+    
+    % Creating the scatter plot based upon the results
+    scatter(testing_pca_vals, acc, '*k')
+    
+    % Printing the text percentage values
+    for i = 1:length(acc)
+        text(testing_pca_vals(i), acc(i)+3, sprintf('%.f%%', acc(i)) )
+    end
+    
+    % Fixing the limits and the grid
+    axis([0 65 0 100])
+    grid on
+    
+    % Labeling Axis
+    title('Optimized Naive Bayes Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories')
+    xlabel('Number of PCA Components')
+    ylabel('Accuracy (Percentage)')
+    
+catch
+    
+    fprintf('Error on Naive Bayes Classifer...\n')
+    
+end
+
+
+%% Optimized Binary Classifier
+
+fprintf('Creating the Optimized Binary Classifier Model...\n')
+
+% Initializing variables
+count = 1;
+acc = [];
+
+testing_pca_vals = 5:5:60;
+
+for pca_count = testing_pca_vals
+    
+    % Calculating the pca for the full trained x matrix
+    [coeff,score,latent,tsquared,explained,mu] = pca(train_x, 'NumComponents', pca_count);
+    % whos coeff score latent tsquared explained mu
+    
+    % Calculating the mean and the total number of important attributes to keep
+    mean_train_x = mean(train_x);
+    total_important_values = sum(explained > 1);
+    
+    % Creating a binary tree classifier model
+    Mdl = fitctree(score, train_y, 'OptimizeHyperParameters', 'auto');
+    
+    % Reshaping the testing dataset based upon the pca coefficients
+    modified_test_x = (test_x - mean_train_x) * coeff;
+    
+    % Predicting the modified values
+    predicted_vals = Mdl.predict(modified_test_x);
+    
+    % Calculating the number correct and incorrect classifications
+    comparison = str2double(test_y) == str2double(predicted_vals);
+    num_incorrect = sum(comparison == 0);
+    num_correct = sum(comparison == 1);
+    
+    % Calculating the accuracy for this specific number of pca components
+    accuracy = (num_correct / length(comparison)) * 100;
+    
+    % Printing the values
+    fprintf('Optimized Binary Classifier. Num Components: %d - %.6f%% Accuracy\n', pca_count, accuracy);
+    
+    % Storing the accuracy
+    acc(count,1) = accuracy;
+    count = count + 1;
+    
+end
+
+%% Plotting the results
+
+% Creating the figure
+figure()
+
+% Creating the scatter plot based upon the results
+scatter(testing_pca_vals, acc, '*k')
+
+% Printing the text percentage values
+for i = 1:length(acc)
+    text(testing_pca_vals(i), acc(i)+3, sprintf('%.f%%', acc(i)) )
+end
+
+% Fixing the limits and the grid
+axis([0 65 0 100])
+grid on
+
+% Labeling the axis
+title('Optmized Binary Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories')
+xlabel('Number of PCA Components')
+ylabel('Accuracy (Percentage)')
+
+%% Optimized KNN Classifier
+
+fprintf('Creating the Optimized KNN Model...\n')
+
+% Initializing variables
+count = 1;
+acc = [];
+
+testing_pca_vals = 5:5:60;
+
+for pca_count = testing_pca_vals
+    
+    % Calculating the pca for the full trained x matrix
+    [coeff,score,latent,tsquared,explained,mu] = pca(train_x, 'NumComponents', pca_count);
+    % whos coeff score latent tsquared explained mu
+    
+    % Calculating the mean and the total number of important attributes to keep
+    mean_train_x = mean(train_x);
+    total_important_values = sum(explained > 1);
+    
+    % Creating a KNN classifier model
+    Mdl = fitcknn(score, train_y, 'OptimizeHyperParameters', 'auto');
+    
+    % Reshaping the testing dataset based upon the pca coefficients
+    modified_test_x = (test_x - mean_train_x) * coeff;
+    
+    % Predicting the modified values
+    predicted_vals = Mdl.predict(modified_test_x);
+    
+    % Calculating the number correct and incorrect classifications
+    comparison = str2double(test_y) == str2double(predicted_vals);
+    num_incorrect = sum(comparison == 0);
+    num_correct = sum(comparison == 1);
+    
+    % Calculating the accuracy for this specific number of pca components
+    accuracy = (num_correct / length(comparison)) * 100;
+    
+    % Printing the values
+    fprintf('Optimized KNN. Num Components: %d - %.6f%% Accuracy\n', pca_count, accuracy);
+    
+    % Storing the accuracy
+    acc(count,1) = accuracy;
+    count = count + 1;
+    
+end
+
+%% Plotting the results
+
+% Creating the figure
+figure()
+
+% Creating the scatter plot based upon the results
+scatter(testing_pca_vals, acc, '*k')
+
+% Printing the text percentage values
+for i = 1:length(acc)
+    text(testing_pca_vals(i), acc(i)+3, sprintf('%.f%%', acc(i)) )
+end
+
+% Fixing the limits and the grid
+axis([0 65 0 100])
+grid on
+
+% Labeling the axis
+title('Optimized KNN Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories')
+xlabel('Number of PCA Components')
+ylabel('Accuracy (Percentage)')
+
 %% Ensemble of Learners for classification tree
+
+fprintf('Creating the Ensemble Model...\n')
 
 % Initializing variables
 count = 1;
@@ -418,7 +604,7 @@ for pca_count = testing_pca_vals
     accuracy = (num_correct / length(comparison)) * 100;
     
     % Printing the values
-    fprintf('Num Components: %d - %.2f%% Accuracy\n', pca_count, accuracy);
+    fprintf('Ensemble. Num Components: %d - %.6f%% Accuracy\n', pca_count, accuracy);
     
     % Storing the accuracy
     acc(count,1) = accuracy;
@@ -444,9 +630,14 @@ axis([0 65 0 100])
 grid on
 
 % Labeling the axis
-title('Ensemble Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories - 50k')
+title('Ensemble Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories')
 xlabel('Number of PCA Components')
 ylabel('Accuracy (Percentage)')
+
+
+%% Cleanup
+
+fprintf('Completed the Supervised Model Test.\n')
 
 
 
