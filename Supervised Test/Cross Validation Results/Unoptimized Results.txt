@@ -1,0 +1,48 @@
+Round 1, NB,  Training Accuracy = %22.546141, Testing Accuracy = %22.873346
+Round 1, CT,  Training Accuracy = %80.117450, Testing Accuracy = %41.965974
+Round 1, KNN, Training Accuracy = %99.643456, Testing Accuracy = %48.582231
+     2
+
+Round 2, NB,  Training Accuracy = %23.452905, Testing Accuracy = %22.452830
+Round 2, CT,  Training Accuracy = %79.462975, Testing Accuracy = %43.207547
+Round 2, KNN, Training Accuracy = %99.706314, Testing Accuracy = %49.433962
+     3
+
+Round 3, NB,  Training Accuracy = %23.767569, Testing Accuracy = %23.018868
+Round 3, CT,  Training Accuracy = %80.092301, Testing Accuracy = %46.226415
+Round 3, KNN, Training Accuracy = %99.643382, Testing Accuracy = %47.169811
+     4
+
+Round 4, NB,  Training Accuracy = %24.056208, Testing Accuracy = %22.873346
+Round 4, CT,  Training Accuracy = %79.551174, Testing Accuracy = %42.722117
+Round 4, KNN, Training Accuracy = %99.706376, Testing Accuracy = %47.826087
+     5
+
+Round 5, NB,  Training Accuracy = %24.774491, Testing Accuracy = %23.018868
+Round 5, CT,  Training Accuracy = %80.406965, Testing Accuracy = %42.075472
+Round 5, KNN, Training Accuracy = %99.643382, Testing Accuracy = %47.358491
+     6
+
+Round 6, NB,  Training Accuracy = %23.028523, Testing Accuracy = %22.873346
+Round 6, CT,  Training Accuracy = %80.620805, Testing Accuracy = %42.155009
+Round 6, KNN, Training Accuracy = %99.706376, Testing Accuracy = %47.069943
+     7
+
+Round 7, NB,  Training Accuracy = %23.872456, Testing Accuracy = %23.962264
+Round 7, CT,  Training Accuracy = %80.008391, Testing Accuracy = %43.207547
+Round 7, KNN, Training Accuracy = %99.664359, Testing Accuracy = %50.943396
+     8
+
+Round 8, NB,  Training Accuracy = %24.375918, Testing Accuracy = %21.320755
+Round 8, CT,  Training Accuracy = %79.546885, Testing Accuracy = %41.320755
+Round 8, KNN, Training Accuracy = %99.664359, Testing Accuracy = %47.735849
+     9
+
+Round 9, NB,  Training Accuracy = %22.529893, Testing Accuracy = %21.320755
+Round 9, CT,  Training Accuracy = %80.050346, Testing Accuracy = %41.698113
+Round 9, KNN, Training Accuracy = %99.685337, Testing Accuracy = %42.264151
+    10
+
+Round 10, NB,  Training Accuracy = %23.180197, Testing Accuracy = %24.528302
+Round 10, CT,  Training Accuracy = %79.504930, Testing Accuracy = %38.867925
+Round 10, KNN, Training Accuracy = %99.727292, Testing Accuracy = %48.490566

@@ -3,7 +3,7 @@
 clc; clear; fclose('all')
 
 % Opening the file to read
-FID = fopen('/Users/alperender/Desktop/ALDA-Project/Unsupervised Final/Unsupervised Output.csv','r');
+FID = fopen('C:\Users\Alper Ender\Downloads\Version 2\Unsupervised Final\Unsupervised Output.csv','r');
 
 % Initalizing variables
 counter = 1;

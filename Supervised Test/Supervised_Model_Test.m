@@ -5,7 +5,7 @@ clc; clear; fclose('all')
 %% Reading in the data
 
 % Opening the training file to read
-train_fid = fopen('/Users/alperender/Desktop/ALDA-Project/Supervised Test/Train.csv','r');
+train_fid = fopen('C:\Users\Alper Ender\Downloads\Version 2\Supervised Test\Train.csv','r');
 
 % Initalizing training variables
 counter = 1;
@@ -36,7 +36,7 @@ fclose(train_fid);
 
 
 % Opening the test file to read
-test_fid = fopen('/Users/alperender/Desktop/ALDA-Project/Supervised Test/Testing.csv','r');
+test_fid = fopen('C:\Users\Alper Ender\Downloads\Version 2\Supervised Test\Testing.csv','r');
 
 % Initalizing test variables
 counter = 1;
@@ -73,7 +73,7 @@ train_docs = tokenizedDocument;
 test_docs = tokenizedDocument;
 
 % Reading in the dictionary words and tokenizing the words
-dictionary = fileread('/Users/alperender/Desktop/ALDA-Project/Unsupervised Final/words.txt');
+dictionary = fileread('C:\Users\Alper Ender\Downloads\Version 2\Unsupervised Final\words.txt');
 dict = tokenizedDocument(dictionary);
 
 % Creating a bag of words based off the dictionary values
@@ -89,9 +89,19 @@ end
 % Encode the training words based upon the dictionary words
 s_train_x = encode(t_bag, train_docs);
 
+
+%%
+%s_train_x = uint16(s_train_x)
+% [r, c] = size(s_train_x);
+% b = floor(r/2);
+% 
+% s1 = full(s_train_x(1:b,:));
+% train_x = s1;
+
 % Obtain the entire training set
 train_x = full(s_train_x);
 
+%%
 
 % - TESTING -
 % Going through the words and creating a tokenized document based on the
@@ -102,6 +112,12 @@ end
 
 % Encode the testing words based upon the dictionary words
 s_test_x = encode(t_bag, test_docs);
+
+% [r, c] = size(s_test_x);
+% b = floor(r/2);
+% 
+% s2 = full(s_test_x(1:b,:));
+% test_x = s2;
 
 % Obtaining the entire testing set
 test_x = full(s_test_x);
@@ -169,7 +185,7 @@ axis([0 65 0 100])
 grid on
 
 % Labeling Axis
-title('Naive Bayes Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories - Small Dataset')
+title('Naive Bayes Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories - 50k')
 xlabel('Number of PCA Components')
 ylabel('Accuracy (Percentage)')
 
@@ -236,7 +252,7 @@ axis([0 65 0 100])
 grid on
 
 % Labeling the axis
-title('Binary Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories - Small Dataset')
+title('Binary Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories - 50k')
 xlabel('Number of PCA Components')
 ylabel('Accuracy (Percentage)')
 
@@ -302,7 +318,7 @@ axis([0 65 0 100])
 grid on
 
 % Labeling the axis
-title('KNN Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories - Small Dataset')
+title('KNN Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories - 50k')
 xlabel('Number of PCA Components')
 ylabel('Accuracy (Percentage)')
 
@@ -348,7 +364,7 @@ ylim([0 100])
 grid on
 
 % Labeling the axis
-title('KNN Classifier - Accuracy vs. NO PCA - 20 Categories - Small Dataset')
+title('KNN Classifier - Accuracy vs. NO PCA - 20 Categories - 50k')
 xlabel('Number of Components')
 ylabel('Accuracy (Percentage)')
 
@@ -417,7 +433,7 @@ axis([0 65 0 100])
 grid on
 
 % Labeling the axis
-title('Ensemble Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories - Small Dataset')
+title('Ensemble Classifier - Accuracy vs. Number of Components (PCA) - 20 Categories - 50k')
 xlabel('Number of PCA Components')
 ylabel('Accuracy (Percentage)')
 
