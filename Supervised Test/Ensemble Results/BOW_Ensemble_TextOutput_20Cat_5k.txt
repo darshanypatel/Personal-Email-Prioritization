@@ -1,0 +1,396 @@
+|===================================================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |       Method | NumLearningC-|    LearnRate |  MinLeafSize |
+|      | result |             | runtime     | (observed)  | (estim.)    |              | ycles        |              |              |
+|===================================================================================================================================|
+|    1 | Best   |     0.82204 |      25.622 |     0.82204 |     0.82204 |   AdaBoostM2 |          160 |    0.0069629 |         1615 |
+|    2 | Best   |     0.82063 |      1.8531 |     0.82063 |     0.82133 |   AdaBoostM2 |           15 |     0.052638 |         1787 |
+|    3 | Best   |       0.713 |      3.8539 |       0.713 |     0.71301 |   AdaBoostM2 |           13 |    0.0034512 |            5 |
+|    4 | Accept |     0.83384 |      29.449 |       0.713 |     0.71301 |     RUSBoost |          173 |      0.76064 |           64 |
+|    5 | Best   |     0.71277 |      4.7177 |     0.71277 |     0.71277 |   AdaBoostM2 |           11 |    0.0065175 |            1 |
+|    6 | Best   |     0.69837 |      5.0001 |     0.69837 |     0.69843 |   AdaBoostM2 |           12 |      0.32912 |            2 |
+|    7 | Accept |     0.71277 |       4.058 |     0.69837 |     0.69845 |   AdaBoostM2 |           13 |     0.001303 |            2 |
+|    8 | Best   |     0.66958 |      4.2422 |     0.66958 |      0.6797 |   AdaBoostM2 |           15 |      0.98939 |            4 |
+|    9 | Best   |     0.66887 |      6.8632 |     0.66887 |     0.66875 |   AdaBoostM2 |           22 |      0.95097 |            8 |
+|   10 | Accept |     0.67666 |      4.5441 |     0.66887 |     0.66817 |   AdaBoostM2 |           14 |      0.91271 |           23 |
+|   11 | Accept |     0.67029 |      3.6783 |     0.66887 |     0.66859 |   AdaBoostM2 |           14 |      0.99252 |            8 |
+|   12 | Accept |     0.67949 |      3.2899 |     0.66887 |     0.67189 |   AdaBoostM2 |           13 |       0.8784 |            8 |
+|   13 | Accept |     0.68987 |      2.5104 |     0.66887 |     0.66794 |   AdaBoostM2 |           10 |      0.81659 |           10 |
+|   14 | Best   |     0.66675 |      5.4161 |     0.66675 |     0.66658 |   AdaBoostM2 |           22 |       0.9938 |            3 |
+|   15 | Accept |     0.82063 |      5.7407 |     0.66675 |     0.66707 |   AdaBoostM2 |           53 |      0.35813 |         1928 |
+|   16 | Best   |     0.66179 |      8.9757 |     0.66179 |     0.66513 |   AdaBoostM2 |           37 |       0.8676 |            1 |
+|   17 | Best   |      0.6278 |      25.029 |      0.6278 |      0.6292 |   AdaBoostM2 |          105 |      0.92466 |            3 |
+|   18 | Best   |     0.59901 |      126.72 |     0.59901 |      0.5998 |   AdaBoostM2 |          470 |      0.89251 |            3 |
+|   19 | Best   |     0.49327 |       2.369 |     0.49327 |     0.49349 |          Bag |           11 |            - |            1 |
+|   20 | Accept |     0.60042 |      1.4946 |     0.49327 |     0.49365 |          Bag |           11 |            - |           91 |
+|===================================================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |       Method | NumLearningC-|    LearnRate |  MinLeafSize |
+|      | result |             | runtime     | (observed)  | (estim.)    |              | ycles        |              |              |
+|===================================================================================================================================|
+|   21 | Best   |     0.46873 |      49.456 |     0.46873 |     0.46919 |          Bag |          224 |            - |            1 |
+|   22 | Accept |     0.47368 |      112.02 |     0.46873 |     0.47127 |          Bag |          494 |            - |            1 |
+|   23 | Accept |      0.4843 |      11.478 |     0.46873 |     0.47057 |          Bag |           54 |            - |            3 |
+|   24 | Accept |     0.47014 |      19.425 |     0.46873 |     0.46973 |          Bag |           90 |            - |            1 |
+|   25 | Accept |      0.4725 |       28.41 |     0.46873 |     0.47021 |          Bag |          109 |            - |            1 |
+|   26 | Accept |     0.46873 |      27.892 |     0.46873 |     0.46984 |          Bag |          132 |            - |            1 |
+|   27 | Accept |     0.82063 |     0.88001 |     0.46873 |     0.46994 |          Bag |           10 |            - |         2108 |
+|   28 | Accept |     0.51664 |      1.7798 |     0.46873 |     0.47002 |          Bag |           10 |            - |           14 |
+|   29 | Accept |     0.81614 |      1.6549 |     0.46873 |     0.47002 |     RUSBoost |           12 |    0.0013498 |            1 |
+|   30 | Accept |     0.84706 |      1.2143 |     0.46873 |     0.47004 |     RUSBoost |           10 |    0.0013287 |         2054 |
+
+__________________________________________________________
+Optimization completed.
+MaxObjectiveEvaluations of 30 reached.
+Total function evaluations: 30
+Total elapsed time: 595.4797 seconds.
+Total objective function evaluation time: 529.6334
+
+Best observed feasible point:
+    Method    NumLearningCycles    LearnRate    MinLeafSize
+    ______    _________________    _________    ___________
+
+    Bag       224                  NaN          1          
+
+Observed objective function value = 0.46873
+Estimated objective function value = 0.47004
+Function evaluation time = 49.4559
+
+Best estimated feasible point (according to models):
+    Method    NumLearningCycles    LearnRate    MinLeafSize
+    ______    _________________    _________    ___________
+
+    Bag       224                  NaN          1          
+
+Estimated objective function value = 0.47004
+Estimated function evaluation time = 51.5338
+
+Num Components: 10 - 53.21% Accuracy
+|===================================================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |       Method | NumLearningC-|    LearnRate |  MinLeafSize |
+|      | result |             | runtime     | (observed)  | (estim.)    |              | ycles        |              |              |
+|===================================================================================================================================|
+|    1 | Best   |     0.47109 |      4.9401 |     0.47109 |     0.47109 |          Bag |           14 |            - |            5 |
+|    2 | Accept |     0.57187 |      26.394 |     0.47109 |     0.47673 |          Bag |          204 |            - |          119 |
+|    3 | Accept |     0.65754 |      76.769 |     0.47109 |     0.47186 |   AdaBoostM2 |          402 |      0.94969 |          661 |
+|    4 | Accept |     0.84706 |      5.9199 |     0.47109 |      0.5375 |     RUSBoost |           62 |    0.0053367 |         1390 |
+|    5 | Best   |     0.46802 |        2.92 |     0.46802 |     0.46786 |          Bag |           10 |            - |            1 |
+|    6 | Accept |     0.66816 |      5.9179 |     0.46802 |     0.46783 |   AdaBoostM2 |           16 |    0.0010022 |            7 |
+|    7 | Accept |     0.47958 |      2.8703 |     0.46802 |     0.47237 |          Bag |           10 |            - |            1 |
+|    8 | Accept |     0.47132 |       2.717 |     0.46802 |     0.47227 |          Bag |           10 |            - |            1 |
+|    9 | Accept |     0.47935 |      2.5806 |     0.46802 |     0.47402 |          Bag |           10 |            - |            1 |
+|   10 | Best   |     0.46306 |      4.1237 |     0.46306 |     0.46836 |          Bag |           16 |            - |            1 |
+|   11 | Best   |     0.44914 |      5.0934 |     0.44914 |     0.45472 |          Bag |           20 |            - |            1 |
+|   12 | Best   |     0.44229 |      7.0283 |     0.44229 |      0.4437 |          Bag |           28 |            - |            1 |
+|   13 | Best   |     0.43639 |      27.266 |     0.43639 |     0.43612 |          Bag |          108 |            - |            1 |
+|   14 | Accept |     0.44088 |       15.81 |     0.43639 |     0.43736 |          Bag |           61 |            - |            1 |
+|   15 | Accept |     0.44277 |      15.403 |     0.43639 |     0.43738 |          Bag |           61 |            - |            2 |
+|   16 | Accept |     0.44111 |      17.072 |     0.43639 |     0.43816 |          Bag |           68 |            - |            1 |
+|   17 | Accept |     0.43852 |      17.786 |     0.43639 |     0.43825 |          Bag |           72 |            - |            1 |
+|   18 | Accept |     0.74038 |      8.2368 |     0.43639 |     0.43826 |     RUSBoost |           60 |    0.0052061 |            1 |
+|   19 | Accept |     0.82063 |      1.1295 |     0.43639 |     0.43829 |   AdaBoostM2 |           10 |    0.0010973 |         2035 |
+|   20 | Accept |     0.79372 |      2.0337 |     0.43639 |     0.43827 |   AdaBoostM2 |           17 |    0.0011834 |         1695 |
+|===================================================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |       Method | NumLearningC-|    LearnRate |  MinLeafSize |
+|      | result |             | runtime     | (observed)  | (estim.)    |              | ycles        |              |              |
+|===================================================================================================================================|
+|   21 | Accept |     0.82063 |     0.85803 |     0.43639 |      0.4385 |          Bag |           10 |            - |         2116 |
+|   22 | Best   |     0.43592 |      26.956 |     0.43592 |     0.43836 |          Bag |          104 |            - |            2 |
+|   23 | Accept |     0.44867 |      46.979 |     0.43592 |     0.43854 |          Bag |          111 |            - |            2 |
+|   24 | Accept |     0.63063 |      3.9719 |     0.43592 |      0.4383 |          Bag |           10 |            - |          236 |
+|   25 | Accept |     0.67288 |      3.9222 |     0.43592 |     0.43827 |   AdaBoostM2 |           10 |    0.0010407 |          201 |
+|   26 | Accept |     0.44253 |      24.967 |     0.43592 |     0.43908 |          Bag |           85 |            - |            1 |
+|   27 | Accept |     0.66698 |      177.55 |     0.43592 |     0.43909 |   AdaBoostM2 |          457 |    0.0010192 |            1 |
+|   28 | Accept |     0.76068 |      59.115 |     0.43592 |     0.43909 |     RUSBoost |          496 |       0.6995 |           46 |
+|   29 | Accept |     0.79821 |       1.359 |     0.43592 |     0.43911 |     RUSBoost |           10 |      0.16384 |           58 |
+|   30 | Accept |     0.78263 |      1.4509 |     0.43592 |     0.43912 |     RUSBoost |           10 |       0.6347 |            6 |
+
+__________________________________________________________
+Optimization completed.
+MaxObjectiveEvaluations of 30 reached.
+Total function evaluations: 30
+Total elapsed time: 670.1111 seconds.
+Total objective function evaluation time: 599.1364
+
+Best observed feasible point:
+    Method    NumLearningCycles    LearnRate    MinLeafSize
+    ______    _________________    _________    ___________
+
+    Bag       104                  NaN          2          
+
+Observed objective function value = 0.43592
+Estimated objective function value = 0.43912
+Function evaluation time = 26.9561
+
+Best estimated feasible point (according to models):
+    Method    NumLearningCycles    LearnRate    MinLeafSize
+    ______    _________________    _________    ___________
+
+    Bag       72                   NaN          1          
+
+Estimated objective function value = 0.43912
+Estimated function evaluation time = 18.7177
+
+Num Components: 20 - 58.21% Accuracy
+|===================================================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |       Method | NumLearningC-|    LearnRate |  MinLeafSize |
+|      | result |             | runtime     | (observed)  | (estim.)    |              | ycles        |              |              |
+|===================================================================================================================================|
+|    1 | Best   |     0.84706 |      1.5962 |     0.84706 |     0.84706 |     RUSBoost |           11 |      0.12236 |         1512 |
+|    2 | Best   |     0.67595 |      19.872 |     0.67595 |     0.68592 |     RUSBoost |          136 |     0.040878 |            9 |
+|    3 | Best   |     0.44442 |      19.355 |     0.44442 |     0.45413 |          Bag |          108 |            - |           26 |
+|    4 | Accept |      0.7333 |      45.057 |     0.44442 |     0.44451 |   AdaBoostM2 |          364 |     0.041039 |         1502 |
+|    5 | Accept |     0.45268 |       82.87 |     0.44442 |     0.44483 |          Bag |          497 |            - |           31 |
+|    6 | Best   |     0.43262 |      2.5412 |     0.43262 |     0.43282 |          Bag |           10 |            - |            2 |
+|    7 | Accept |     0.63252 |      21.764 |     0.43262 |     0.43281 |   AdaBoostM2 |           47 |    0.0010026 |            3 |
+|    8 | Accept |     0.71041 |      3.4961 |     0.43262 |      0.4326 |   AdaBoostM2 |           10 |    0.0036138 |          547 |
+|    9 | Best   |      0.3899 |      126.86 |      0.3899 |     0.39644 |          Bag |          488 |            - |            1 |
+|   10 | Best   |      0.3873 |      126.31 |      0.3873 |     0.38865 |          Bag |          490 |            - |            1 |
+|   11 | Accept |     0.82063 |     0.88502 |      0.3873 |     0.38868 |          Bag |           10 |            - |         2070 |
+|   12 | Accept |     0.44017 |      2.7478 |      0.3873 |     0.38865 |          Bag |           10 |            - |            1 |
+|   13 | Accept |     0.39462 |      123.67 |      0.3873 |      0.3887 |          Bag |          499 |            - |            4 |
+|   14 | Accept |     0.39108 |      125.37 |      0.3873 |     0.38881 |          Bag |          492 |            - |            2 |
+|   15 | Accept |     0.38872 |      129.17 |      0.3873 |     0.38864 |          Bag |          499 |            - |            1 |
+|   16 | Accept |      0.3932 |      126.19 |      0.3873 |      0.3898 |          Bag |          492 |            - |            1 |
+|   17 | Accept |     0.74345 |      1.7049 |      0.3873 |     0.38979 |     RUSBoost |           10 |    0.0010636 |            1 |
+|   18 | Accept |      0.3932 |      132.27 |      0.3873 |     0.38982 |          Bag |          490 |            - |            2 |
+|   19 | Accept |     0.87987 |       1.344 |      0.3873 |     0.38982 |     RUSBoost |           10 |    0.0072525 |          100 |
+|   20 | Accept |     0.74746 |      2.2983 |      0.3873 |     0.38982 |     RUSBoost |           14 |      0.79095 |            1 |
+|===================================================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |       Method | NumLearningC-|    LearnRate |  MinLeafSize |
+|      | result |             | runtime     | (observed)  | (estim.)    |              | ycles        |              |              |
+|===================================================================================================================================|
+|   21 | Accept |      0.5865 |      5.5228 |      0.3873 |     0.38977 |   AdaBoostM2 |           11 |      0.62173 |            1 |
+|   22 | Accept |     0.43828 |       2.323 |      0.3873 |     0.38981 |          Bag |           10 |            - |            9 |
+|   23 | Accept |     0.61813 |      1.2173 |      0.3873 |      0.3899 |          Bag |           10 |            - |          310 |
+|   24 | Accept |     0.58839 |      5.8339 |      0.3873 |      0.3899 |   AdaBoostM2 |           13 |       0.9791 |           93 |
+|   25 | Accept |     0.63229 |      5.0729 |      0.3873 |     0.38982 |   AdaBoostM2 |           10 |     0.024306 |            1 |
+|   26 | Accept |     0.75879 |      1.3869 |      0.3873 |     0.38983 |     RUSBoost |           10 |      0.95857 |           56 |
+|   27 | Accept |     0.84706 |      1.2061 |      0.3873 |     0.38983 |     RUSBoost |           10 |    0.0010563 |         1815 |
+|   28 | Accept |     0.71654 |      1.6643 |      0.3873 |     0.38984 |     RUSBoost |           10 |    0.0010607 |           13 |
+|   29 | Accept |     0.82063 |      1.2636 |      0.3873 |      0.3898 |   AdaBoostM2 |           10 |      0.74974 |         2089 |
+|   30 | Accept |     0.82063 |      1.2151 |      0.3873 |     0.38979 |   AdaBoostM2 |           10 |    0.0013957 |         2087 |
+
+__________________________________________________________
+Optimization completed.
+MaxObjectiveEvaluations of 30 reached.
+Total function evaluations: 30
+Total elapsed time: 1195.1533 seconds.
+Total objective function evaluation time: 1122.0905
+
+Best observed feasible point:
+    Method    NumLearningCycles    LearnRate    MinLeafSize
+    ______    _________________    _________    ___________
+
+    Bag       490                  NaN          1          
+
+Observed objective function value = 0.3873
+Estimated objective function value = 0.38979
+Function evaluation time = 126.3091
+
+Best estimated feasible point (according to models):
+    Method    NumLearningCycles    LearnRate    MinLeafSize
+    ______    _________________    _________    ___________
+
+    Bag       499                  NaN          1          
+
+Estimated objective function value = 0.38979
+Estimated function evaluation time = 128.0179
+
+Num Components: 30 - 61.51% Accuracy
+|===================================================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |       Method | NumLearningC-|    LearnRate |  MinLeafSize |
+|      | result |             | runtime     | (observed)  | (estim.)    |              | ycles        |              |              |
+|===================================================================================================================================|
+|    1 | Best   |     0.82063 |      20.678 |     0.82063 |     0.82063 |          Bag |          239 |            - |         2116 |
+|    2 | Accept |     0.85721 |      5.8139 |     0.82063 |     0.82208 |     RUSBoost |           50 |      0.15824 |          105 |
+|    3 | Best   |      0.6363 |      28.383 |      0.6363 |     0.67153 |   AdaBoostM2 |           44 |    0.0014563 |           13 |
+|    4 | Best   |     0.50153 |      184.85 |     0.50153 |     0.50187 |   AdaBoostM2 |          296 |      0.70817 |            3 |
+|    5 | Accept |      0.6363 |      6.4353 |     0.50153 |     0.50158 |   AdaBoostM2 |           10 |    0.0025162 |            1 |
+|    6 | Accept |     0.57777 |      7.1717 |     0.50153 |     0.50161 |   AdaBoostM2 |           11 |      0.99467 |           14 |
+|    7 | Accept |      0.5157 |      318.61 |     0.50153 |      0.5017 |   AdaBoostM2 |          499 |      0.20185 |            2 |
+|    8 | Best   |     0.49068 |      313.14 |     0.49068 |     0.49065 |   AdaBoostM2 |          490 |      0.99281 |           18 |
+|    9 | Accept |     0.49611 |      292.09 |     0.49068 |     0.49311 |   AdaBoostM2 |          491 |      0.96926 |           31 |
+|   10 | Accept |     0.49162 |      310.94 |     0.49068 |     0.49261 |   AdaBoostM2 |          486 |      0.99216 |            1 |
+|   11 | Accept |     0.49139 |       299.3 |     0.49068 |     0.49223 |   AdaBoostM2 |          491 |      0.95886 |            9 |
+|   12 | Accept |     0.84706 |      47.331 |     0.49068 |     0.49222 |     RUSBoost |          494 |    0.0010072 |          380 |
+|   13 | Accept |      0.9004 |      1.3016 |     0.49068 |     0.49222 |     RUSBoost |           10 |    0.0010049 |           94 |
+|   14 | Accept |     0.84706 |      1.1686 |     0.49068 |     0.49221 |     RUSBoost |           10 |      0.97157 |          223 |
+|   15 | Best   |     0.42672 |      2.9979 |     0.42672 |     0.42677 |          Bag |           10 |            - |            2 |
+|   16 | Accept |      0.4312 |      3.4305 |     0.42672 |     0.42571 |          Bag |           11 |            - |            1 |
+|   17 | Accept |     0.82063 |      0.8828 |     0.42672 |     0.42698 |          Bag |           10 |            - |         1946 |
+|   18 | Best   |      0.4076 |      8.5683 |      0.4076 |     0.40791 |          Bag |           29 |            - |            2 |
+|   19 | Best   |     0.38754 |      148.46 |     0.38754 |     0.38744 |          Bag |          495 |            - |            2 |
+|   20 | Best   |     0.37975 |      92.522 |     0.37975 |     0.38019 |          Bag |          320 |            - |            1 |
+|===================================================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |       Method | NumLearningC-|    LearnRate |  MinLeafSize |
+|      | result |             | runtime     | (observed)  | (estim.)    |              | ycles        |              |              |
+|===================================================================================================================================|
+|   21 | Accept |     0.38093 |      146.11 |     0.37975 |     0.38008 |          Bag |          492 |            - |            1 |
+|   22 | Best   |      0.3781 |      143.97 |      0.3781 |     0.37928 |          Bag |          490 |            - |            1 |
+|   23 | Accept |      0.3814 |      146.41 |      0.3781 |      0.3799 |          Bag |          494 |            - |            1 |
+|   24 | Accept |     0.37975 |      144.34 |      0.3781 |     0.37987 |          Bag |          495 |            - |            1 |
+|   25 | Accept |     0.74605 |      1.6857 |      0.3781 |     0.37987 |     RUSBoost |           10 |      0.83614 |            1 |
+|   26 | Accept |     0.82063 |      1.2788 |      0.3781 |     0.37985 |   AdaBoostM2 |           11 |      0.72562 |         1935 |
+|   27 | Accept |     0.84706 |      1.1112 |      0.3781 |     0.37985 |     RUSBoost |           10 |    0.0013948 |         2016 |
+|   28 | Accept |     0.82063 |      1.1304 |      0.3781 |     0.37985 |   AdaBoostM2 |           10 |    0.0010397 |         2112 |
+|   29 | Accept |     0.56762 |      1.5552 |      0.3781 |     0.37986 |          Bag |           10 |            - |          155 |
+|   30 | Accept |     0.72127 |      1.6836 |      0.3781 |     0.37986 |     RUSBoost |           10 |     0.001127 |            1 |
+
+__________________________________________________________
+Optimization completed.
+MaxObjectiveEvaluations of 30 reached.
+Total function evaluations: 30
+Total elapsed time: 2751.7583 seconds.
+Total objective function evaluation time: 2683.3575
+
+Best observed feasible point:
+    Method    NumLearningCycles    LearnRate    MinLeafSize
+    ______    _________________    _________    ___________
+
+    Bag       490                  NaN          1          
+
+Observed objective function value = 0.3781
+Estimated objective function value = 0.37986
+Function evaluation time = 143.9736
+
+Best estimated feasible point (according to models):
+    Method    NumLearningCycles    LearnRate    MinLeafSize
+    ______    _________________    _________    ___________
+
+    Bag       490                  NaN          1          
+
+Estimated objective function value = 0.37986
+Estimated function evaluation time = 144.079
+
+Num Components: 40 - 62.26% Accuracy
+|===================================================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |       Method | NumLearningC-|    LearnRate |  MinLeafSize |
+|      | result |             | runtime     | (observed)  | (estim.)    |              | ycles        |              |              |
+|===================================================================================================================================|
+|    1 | Best   |     0.67571 |       5.922 |     0.67571 |     0.67571 |   AdaBoostM2 |           13 |    0.0010738 |          325 |
+|    2 | Best   |     0.62686 |      30.713 |     0.62686 |     0.62998 |     RUSBoost |          180 |      0.87927 |           10 |
+|    3 | Best   |     0.55912 |      1.8414 |     0.55912 |     0.62056 |          Bag |           11 |            - |          128 |
+|    4 | Accept |     0.62119 |      187.31 |     0.55912 |      0.6178 |   AdaBoostM2 |          259 |     0.001374 |            4 |
+|    5 | Best   |     0.54402 |      1.8793 |     0.54402 |     0.55297 |          Bag |           11 |            - |          111 |
+|    6 | Best   |     0.45882 |      2.3473 |     0.45882 |     0.45883 |          Bag |           11 |            - |           30 |
+|    7 | Best   |     0.43427 |      2.7838 |     0.43427 |      0.4346 |          Bag |           11 |            - |           15 |
+|    8 | Best   |     0.42908 |      3.1937 |     0.42908 |     0.42912 |          Bag |           11 |            - |            5 |
+|    9 | Accept |     0.43002 |       3.373 |     0.42908 |     0.42851 |          Bag |           11 |            - |            1 |
+|   10 | Best   |     0.42743 |      3.3167 |     0.42743 |     0.42779 |          Bag |           11 |            - |            2 |
+|   11 | Best   |     0.42577 |      3.2891 |     0.42577 |     0.42684 |          Bag |           11 |            - |            2 |
+|   12 | Accept |     0.43002 |      3.3359 |     0.42577 |     0.42786 |          Bag |           11 |            - |            2 |
+|   13 | Accept |     0.42624 |      3.1456 |     0.42577 |     0.42789 |          Bag |           11 |            - |            7 |
+|   14 | Accept |     0.42837 |      2.9966 |     0.42577 |     0.42765 |          Bag |           11 |            - |            7 |
+|   15 | Accept |     0.42672 |      3.0536 |     0.42577 |      0.4274 |          Bag |           11 |            - |            7 |
+|   16 | Best   |     0.42412 |       3.183 |     0.42412 |     0.42674 |          Bag |           11 |            - |            7 |
+|   17 | Accept |     0.82063 |     0.98507 |     0.42412 |     0.42675 |          Bag |           11 |            - |         2108 |
+|   18 | Accept |     0.84706 |       2.286 |     0.42412 |     0.42675 |     RUSBoost |           24 |      0.95177 |         2116 |
+|   19 | Best   |     0.42058 |      3.8199 |     0.42058 |     0.42117 |          Bag |           13 |            - |            3 |
+|   20 | Best   |     0.38471 |      144.07 |     0.38471 |     0.38469 |          Bag |          495 |            - |            2 |
+|===================================================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |       Method | NumLearningC-|    LearnRate |  MinLeafSize |
+|      | result |             | runtime     | (observed)  | (estim.)    |              | ycles        |              |              |
+|===================================================================================================================================|
+|   21 | Accept |     0.39556 |      19.967 |     0.38471 |      0.3846 |          Bag |           78 |            - |            8 |
+|   22 | Accept |      0.3899 |      128.07 |     0.38471 |      0.3847 |          Bag |          497 |            - |            7 |
+|   23 | Accept |     0.38825 |      57.568 |     0.38471 |     0.38508 |          Bag |          203 |            - |            3 |
+|   24 | Best   |     0.37928 |       106.1 |     0.37928 |     0.37993 |          Bag |          364 |            - |            1 |
+|   25 | Accept |     0.75549 |      1.9077 |     0.37928 |     0.37993 |     RUSBoost |           11 |    0.0078078 |            1 |
+|   26 | Accept |     0.84706 |      1.1497 |     0.37928 |     0.37986 |     RUSBoost |           11 |     0.001164 |          939 |
+|   27 | Accept |     0.38093 |      128.45 |     0.37928 |     0.38013 |          Bag |          444 |            - |            1 |
+|   28 | Accept |     0.38164 |      144.26 |     0.37928 |      0.3807 |          Bag |          493 |            - |            1 |
+|   29 | Accept |     0.37928 |      61.864 |     0.37928 |     0.37996 |          Bag |          213 |            - |            1 |
+|   30 | Accept |     0.37999 |      66.335 |     0.37928 |     0.37995 |          Bag |          215 |            - |            1 |
+
+__________________________________________________________
+Optimization completed.
+MaxObjectiveEvaluations of 30 reached.
+Total function evaluations: 30
+Total elapsed time: 1173.5891 seconds.
+Total objective function evaluation time: 1128.5211
+
+Best observed feasible point:
+    Method    NumLearningCycles    LearnRate    MinLeafSize
+    ______    _________________    _________    ___________
+
+    Bag       364                  NaN          1          
+
+Observed objective function value = 0.37928
+Estimated objective function value = 0.37995
+Function evaluation time = 106.1045
+
+Best estimated feasible point (according to models):
+    Method    NumLearningCycles    LearnRate    MinLeafSize
+    ______    _________________    _________    ___________
+
+    Bag       364                  NaN          1          
+
+Estimated objective function value = 0.37995
+Estimated function evaluation time = 107.3509
+
+Num Components: 50 - 62.64% Accuracy
+|===================================================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |       Method | NumLearningC-|    LearnRate |  MinLeafSize |
+|      | result |             | runtime     | (observed)  | (estim.)    |              | ycles        |              |              |
+|===================================================================================================================================|
+|    1 | Best   |     0.69105 |      8.8213 |     0.69105 |     0.69105 |   AdaBoostM2 |           21 |    0.0050136 |          471 |
+|    2 | Best   |     0.65542 |      84.114 |     0.65542 |     0.65795 |     RUSBoost |          472 |      0.19619 |            2 |
+|    3 | Best   |     0.40902 |      6.7347 |     0.40902 |     0.42791 |          Bag |           21 |            - |            2 |
+|    4 | Accept |     0.63111 |      35.641 |     0.40902 |     0.40921 |   AdaBoostM2 |           41 |    0.0025896 |            1 |
+|    5 | Accept |      0.8565 |       10.24 |     0.40902 |     0.40923 |     RUSBoost |           97 |    0.0010095 |           95 |
+|    6 | Accept |     0.82063 |      1.2014 |     0.40902 |     0.40905 |          Bag |           13 |            - |         2116 |
+|    7 | Accept |     0.42318 |      3.6347 |     0.40902 |      0.4091 |          Bag |           12 |            - |            3 |
+|    8 | Accept |     0.42318 |      4.0416 |     0.40902 |     0.40933 |          Bag |           11 |            - |            1 |
+|    9 | Accept |     0.42743 |       3.356 |     0.40902 |     0.40907 |          Bag |           10 |            - |            2 |
+|   10 | Best   |      0.3755 |      175.33 |      0.3755 |     0.37548 |          Bag |          497 |            - |            1 |
+|   11 | Accept |     0.62119 |      14.512 |      0.3755 |     0.37544 |   AdaBoostM2 |           17 |     0.024533 |            1 |
+|   12 | Accept |     0.38329 |      144.39 |      0.3755 |     0.37551 |          Bag |          491 |            - |            3 |
+|   13 | Accept |     0.37881 |      69.709 |      0.3755 |     0.37558 |          Bag |          232 |            - |            1 |
+|   14 | Accept |     0.38423 |      116.71 |      0.3755 |     0.37576 |          Bag |          396 |            - |            2 |
+|   15 | Accept |     0.37692 |       154.9 |      0.3755 |      0.3764 |          Bag |          489 |            - |            1 |
+|   16 | Accept |     0.41067 |      16.807 |      0.3755 |     0.37643 |          Bag |           75 |            - |           18 |
+|   17 | Accept |     0.39533 |      117.73 |      0.3755 |     0.37644 |          Bag |          473 |            - |           10 |
+|   18 | Accept |     0.37999 |      158.04 |      0.3755 |     0.37757 |          Bag |          498 |            - |            1 |
+|   19 | Accept |     0.37668 |      105.16 |      0.3755 |     0.37741 |          Bag |          336 |            - |            1 |
+|   20 | Accept |     0.38022 |      98.498 |      0.3755 |     0.37764 |          Bag |          323 |            - |            1 |
+|===================================================================================================================================|
+| Iter | Eval   | Objective   | Objective   | BestSoFar   | BestSoFar   |       Method | NumLearningC-|    LearnRate |  MinLeafSize |
+|      | result |             | runtime     | (observed)  | (estim.)    |              | ycles        |              |              |
+|===================================================================================================================================|
+|   21 | Accept |     0.58202 |      1.4012 |      0.3755 |     0.37759 |          Bag |           10 |            - |          233 |
+|   22 | Accept |     0.84706 |      1.0369 |      0.3755 |     0.37759 |     RUSBoost |           10 |    0.0012682 |         2040 |
+|   23 | Accept |     0.37739 |      149.61 |      0.3755 |     0.37756 |          Bag |          498 |            - |            1 |
+|   24 | Accept |     0.72929 |      1.9073 |      0.3755 |     0.37757 |     RUSBoost |           10 |     0.039017 |            1 |
+|   25 | Accept |     0.68539 |       1.865 |      0.3755 |     0.37758 |     RUSBoost |           10 |    0.0014006 |           15 |
+|   26 | Accept |     0.84706 |      1.0401 |      0.3755 |     0.37756 |     RUSBoost |           10 |      0.65502 |         2107 |
+|   27 | Accept |     0.61836 |      8.3355 |      0.3755 |     0.37757 |   AdaBoostM2 |           10 |       0.1894 |           20 |
+|   28 | Accept |     0.82063 |       1.074 |      0.3755 |     0.37756 |   AdaBoostM2 |           10 |    0.0011736 |         2103 |
+|   29 | Accept |     0.63347 |      7.7304 |      0.3755 |     0.37757 |   AdaBoostM2 |           10 |    0.0013207 |           68 |
+|   30 | Accept |     0.84706 |      1.0628 |      0.3755 |     0.37757 |     RUSBoost |           10 |     0.080031 |          172 |
+
+__________________________________________________________
+Optimization completed.
+MaxObjectiveEvaluations of 30 reached.
+Total function evaluations: 30
+Total elapsed time: 1564.1899 seconds.
+Total objective function evaluation time: 1504.6286
+
+Best observed feasible point:
+    Method    NumLearningCycles    LearnRate    MinLeafSize
+    ______    _________________    _________    ___________
+
+    Bag       497                  NaN          1          
+
+Observed objective function value = 0.3755
+Estimated objective function value = 0.37757
+Function evaluation time = 175.3298
+
+Best estimated feasible point (according to models):
+    Method    NumLearningCycles    LearnRate    MinLeafSize
+    ______    _________________    _________    ___________
+
+    Bag       489                  NaN          1          
+
+Estimated objective function value = 0.37757
+Estimated function evaluation time = 156.3281
+
+Num Components: 60 - 62.64% Accuracy
