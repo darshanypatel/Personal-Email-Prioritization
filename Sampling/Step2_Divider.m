@@ -5,7 +5,7 @@
 % Filename: Step2_Divider.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:Takes in the large enron csv email file and split it based
+% Description: Takes in the large enron csv email file and split it based
 % on the name of the folder the email is found
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\

@@ -33,7 +33,7 @@ cd(folder_system.UnsupervisedFinal)
 FOLDER_LOCATION = folder_system.Sampling;
 
 % The Filename to read in
-FILENAME = 'CleanBody_Samples_5469.csv';
+FILENAME = 'CleanBody_Samples_5297.csv';
 
 %% Read in English Dictionary
 

@@ -5,7 +5,7 @@
 % Filename: Step1_CountEmails.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:Takes in the large enron csv email file and counts the
+% Description: Takes in the large enron csv email file and counts the
 % number of emails and number of unique users in the corpus
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\

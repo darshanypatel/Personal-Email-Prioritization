@@ -5,7 +5,7 @@
 % Filename: PP_Test.m
 % Author: Alper Ender
 % Date: November 2017
-% Description: Testing file
+% Description:
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 

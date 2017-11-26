@@ -5,7 +5,7 @@
 % Filename: BatchPreProcess.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:
+% Description: Preprocesses the entire batch
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 

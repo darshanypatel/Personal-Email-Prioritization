@@ -5,14 +5,28 @@
 % Filename: Supervised_Model_Comparison.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:
+% Description: Testing the Supervised Models using K-Fold Cross Validation
+% and Mean Squared Error
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 
-clc; clear; fclose('all')
+%% Setup
+
+clc; fclose('all');
+
+cd(folder_system.SupervisedTest)
+
+% Initialize Variables
+num_folds = 10; % Number of folds
+pca_count = 30; % Number of PCA values
 
 % Opening the file to read
-FID = fopen('C:\Users\Alper Ender\Downloads\Version 2\Unsupervised Final\Unsupervised Output.csv','r');
+FID = fopen('Unsupervised Output.csv','r');
+
+%% Importing values
+
+fprintf('Beginning Supervised Model Comparison...\n')
+fprintf('Importing Documents...\n')
 
 % Initalizing variables
 counter = 1;
@@ -35,32 +49,39 @@ while ~feof(FID)
     
 end
 
-%%
+%% Creating the Bag of Words from the dictionary
+
+fprintf('Creating the Dictionary Bag of Words...\n')
 
 % Reading in the dictionary words and tokenizing the words
-dictionary = fileread('C:\Users\Alper Ender\Downloads\Version 2\Unsupervised Final\words.txt');
+dictionary = fileread('words.txt');
 dict = tokenizedDocument(dictionary);
 
 % Creating a bag of words based off the dictionary values
-t_bag = bagOfWords(dict)
+t_bag = bagOfWords(dict);
 
-%%
 
+%% Creating the documents Bag of Words
+
+fprintf('Creating the Documents Bag of Words...\n')
+
+% Initializing variables
 docs = tokenizedDocument;
-
 [r, c] = size(all_emails);
 
+% Go through each email and put into the document list
 for i = 1:r
     docs(i,1) = tokenizedDocument(all_emails{i,end-1});
 end
 
+% Encode the documents based off the dictionary bag of words
 docs_s = encode(t_bag, docs);
 all_docs = full(docs_s);
 
-%%
+%% Cross Validation
 
-num_folds = 10;
-pca_count = 30;
+fprintf('Beginning Cross Validation...\n')
+
 ind = crossvalind('kfold', r, num_folds);
 
 comp_cnb = {};
@@ -73,7 +94,7 @@ sse_knn = 0;
 
 for i = 1:num_folds
     
-    disp(i)
+    % disp(i)
     
     % Obtaining the training values for this fold
     train_x = all_docs(ind ~= i, :);
@@ -162,6 +183,8 @@ for i = 1:num_folds
 end
 
 %% Optimized Supervised Values
+
+fprintf('Beginning Optimized Cross Validation...\n')
 
 diary('Optimized Comparison.txt');
 
@@ -290,6 +313,8 @@ diary(off)
 
 %% Plotting results
 
+fprintf('Plotting Results...\n')
+
 figure();
 
 % Plotting the Squared Error values
@@ -330,3 +355,8 @@ xlabel('K-Fold')
 ylabel('Squared Error')
 xlim( [ min(x_data)-0.5, max(x_data)+0.5 ] )
 title('10 Fold Cross Validation - Mean Squared Error')
+
+%% Cleanup
+
+fprintf('Supervised Model Comparison Completed.\n')
+

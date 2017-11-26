@@ -5,29 +5,42 @@
 % Filename: GroupVisualizer.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:
+% Description: Visualizes the groups into word clouds
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 
-
-
 % Good ones: 3,5,8,9,12,15,16,18,19,20
-k = 18
+k = 18;
 
 % for k = 1:20
 
+% Selects the group
 b = docs(groups==k);
+
+% Initializes the values
 e = string();
 
+% Iterates through the documents in the group
 for i = 1:length(b)
+    
+    % Takes the string of the document
     c = b(i).string;
     d = '';
+    
+    % Iterates through the document
     for j = 1:length(c)
+        
+        % Collects all the words in the document
         d = [d ' ' char(c(j))];
+        
     end
+    
+    % Stores the values
     e(i,1) = d;
+    
 end
 
+% Displays the word cloud
 figure
 wordcloud(e)
 title(sprintf('Group: %d',k))

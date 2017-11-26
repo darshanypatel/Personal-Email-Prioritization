@@ -5,14 +5,18 @@
 % Filename: Social_Network.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:
+% Description: Takes in the samples and creates a social network off of the
+% values. As well, calculates the importance
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 
 %% Reading in the CSV File
 
+fprintf('Beginning the Social Network Analysis...\n')
+fprintf('Importing the CSV File...\n')
+
 % Opening the CSV File
-FID = fopen('/Users/alperender/Desktop/ALDA-Project/Unsupervised Final/Unsupervised Output.csv','r');
+FID = fopen('Unsupervised Output.csv','r');
 
 % Initializing values
 data = {};
@@ -30,7 +34,7 @@ while ~feof(FID)
     % Updating counter
     i = i + 1;
     
-    disp(i)
+    % disp(i)
     
 end
 
@@ -45,13 +49,7 @@ to = data(:,3);
 
 %% Graphs
 
-% Setting up weights
-% TO_WEIGHT  = 10;
-% CC_WEIGHT  = 7;
-% BCC_WEIGHT = 5;
-%
-% Anonymous function to get weight of each email
-% GetWeight = @(x) strcmpi(x,'TO') * TO_WEIGHT + strcmpi(x,'CC') * CC_WEIGHT + strcmpi(x,'BCC') * BCC_WEIGHT;
+fprintf('Creating Digraph...\n')
 
 % Setting up graph
 G = digraph();
@@ -134,6 +132,8 @@ end
 
 %% Obtaining adjancy graph
 
+fprintf('Creating Adjancy Graph...\n')
+
 lookup_table = {};
 
 % Creating the nodes from the graph
@@ -164,10 +164,12 @@ for i = 1:length(edges)
 end
 
 % Turning the matrix into a sparse matrix
-s_adjency_mat = sparse(adjancy_mat)
+s_adjency_mat = sparse(adjancy_mat);
 
 
 %% Obtaining a Second Graph
+
+fprintf('Creating Graph...\n')
 
 mat_2 = adjancy_mat;
 [r,c] = size(mat_2);
@@ -187,7 +189,14 @@ end
 
 G2 = graph(mat_2, G.Nodes);
 
+% Plotting Social network
+figure
+plot(G2)
+title('Social Networks')
+
 %% Obtaining number of neighbors
+
+fprintf('Calculating number of neighbors...\n')
 
 % Initializing variables
 neigh = {};
@@ -206,6 +215,8 @@ for i = 1:height(G2.Nodes)
 end
 
 %% Setting up categories matrix
+
+fprintf('Calculating categories matrix...\n')
 
 % user_categories is the number of total emails per user depending on the
 % number of categories
@@ -256,6 +267,8 @@ end
 
 %% Set up emails matrix
 
+fprintf('Calculating total emails matrix...\n')
+
 % user_emails is the number of total emails per user
 % ROWS - each email user
 % COLUMNS - 1 column that holds the number of emails for that user
@@ -295,6 +308,8 @@ end
 
 
 %% Calculating the Importance Rating
+
+fprintf('Calculating importance rating...\n')
 
 % WEIGHTS
 w1 = 0.6;
@@ -369,8 +384,14 @@ for i = 1:length(data)
         % Calculating the importance
         importance_calc = w1 * val_1 + w2 * val_2 + w3 * val_3;
         
+        % Storing the importance
         importance{i,j} = importance_calc;
         
     end
     
 end
+
+%% Cleanup
+
+fprintf('Social Network Analysis Completed.\n')
+

@@ -5,7 +5,7 @@
 % Filename: PreProcess.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:
+% Description: Preprocess the individual documents
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 
@@ -26,7 +26,8 @@ documents = tokenizedDocument(cleanTextData);
 % documents = removeLongWords(documents,15);
 
 % Normalize the words using the Porter stemmer.
-doc = documents;
 % doc = normalizeWords(documents);
+
+doc = documents;
 
 end
