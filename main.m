@@ -12,7 +12,7 @@
 %% Setup
 
 % Clear work station
-clc; clear; fclose('all')
+clc; clear; fclose('all');
 
 % Turn off warnings
 warning('off')

@@ -5,7 +5,8 @@
 % Filename: Supervised_Model_Test.m
 % Author: Alper Ender
 % Date: November 2017
-% Description:
+% Description: Testing the supervised models. Testing against the type of
+% model and the number of dimensions to use
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
 
