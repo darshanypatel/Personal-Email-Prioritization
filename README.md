@@ -1,6 +1,12 @@
 # CSC522_Project
 Personal Email Prioritization
 
+Authors:
+* Alper E.
+* Darshan P.
+* Rohit N.
+* Tushita R.
+
 # Required Software Packages
 * MATLAB - Version 9.3 - (R2017b)
 * Statistics and Machine Learning Toolbox - Version 11.2 - (R2017b)
