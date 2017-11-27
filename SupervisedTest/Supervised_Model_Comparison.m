@@ -310,7 +310,7 @@ for i = 1:num_folds
     
 end
 
-diary(off)
+diary('off')
 
 %% Plotting results
 
