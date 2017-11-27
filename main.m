@@ -59,22 +59,17 @@ all_paths(1) = [];
 addpath(all_paths)
 
 
-%%
+%% Running the Script
 
-% Step2_Divider
+% Creating the unsupervised model
+Unsupervised_Models_Final
 
-% cd('Unsupervised Final')
-%
-% Unsupervised_Models_Final
-%
-% cd('../')
-%
-% cd('Supervised Test')
-%
-% Split_Data
-%
-% Supervised_Model_Test
+% Creating the supervised model
+Supervised_Model_Test
+
+% Creating the Social Network
+Social_Network
+
 
 %% Cleanup
 
-% rmpath(all_paths)
