@@ -65,7 +65,7 @@ addpath(all_paths)
 Unsupervised_Models_Final
 
 % Creating the supervised model
-Supervised_Model_Test
+Supervised_Model_Final
 
 % Creating the Social Network
 Social_Network

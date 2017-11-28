@@ -1,0 +1,40 @@
+Naive Bayes. Num Components: 5 - 12.358491% Accuracy
+Naive Bayes. Num Components: 10 - 18.113208% Accuracy
+Naive Bayes. Num Components: 15 - 19.433962% Accuracy
+Naive Bayes. Num Components: 20 - 19.716981% Accuracy
+Naive Bayes. Num Components: 25 - 21.320755% Accuracy
+Naive Bayes. Num Components: 30 - 21.886792% Accuracy
+Naive Bayes. Num Components: 35 - 21.509434% Accuracy
+Naive Bayes. Num Components: 40 - 21.132075% Accuracy
+Naive Bayes. Num Components: 45 - 21.509434% Accuracy
+Naive Bayes. Num Components: 50 - 22.452830% Accuracy
+Naive Bayes. Num Components: 55 - 22.358491% Accuracy
+Naive Bayes. Num Components: 60 - 22.169811% Accuracy
+Creating the Binary Classifier Model...
+Binary Classifier. Num Components: 5 - 34.528302% Accuracy
+Binary Classifier. Num Components: 10 - 39.056604% Accuracy
+Binary Classifier. Num Components: 15 - 38.301887% Accuracy
+Binary Classifier. Num Components: 20 - 41.698113% Accuracy
+Binary Classifier. Num Components: 25 - 40.000000% Accuracy
+Binary Classifier. Num Components: 30 - 39.905660% Accuracy
+Binary Classifier. Num Components: 35 - 41.603774% Accuracy
+Binary Classifier. Num Components: 40 - 42.169811% Accuracy
+Binary Classifier. Num Components: 45 - 43.584906% Accuracy
+Binary Classifier. Num Components: 50 - 42.830189% Accuracy
+Binary Classifier. Num Components: 55 - 43.867925% Accuracy
+Binary Classifier. Num Components: 60 - 42.264151% Accuracy
+Creating the KNN Model...
+KNN. Num Components: 5 - 33.490566% Accuracy
+KNN. Num Components: 10 - 39.811321% Accuracy
+KNN. Num Components: 15 - 44.056604% Accuracy
+KNN. Num Components: 20 - 45.377358% Accuracy
+KNN. Num Components: 25 - 46.792453% Accuracy
+KNN. Num Components: 30 - 47.264151% Accuracy
+KNN. Num Components: 35 - 48.773585% Accuracy
+KNN. Num Components: 40 - 48.018868% Accuracy
+KNN. Num Components: 45 - 48.867925% Accuracy
+KNN. Num Components: 50 - 49.339623% Accuracy
+KNN. Num Components: 55 - 48.867925% Accuracy
+KNN. Num Components: 60 - 48.301887% Accuracy
+Creating the KNN No PCA Model...
+KNN. NO PCA - 45.28% Accuracy
